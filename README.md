@@ -1,5 +1,6 @@
 netinfo
 =======
+Esta aplicación muestra informaciones relacionadas con el Nro. de IP que accede, información georeferenciada mostrada en Google Map, e informaciones de la cabecera, request y parámetros. 
 
 Aplicación de prueba para demoiselle 2.3.0 con JBoss AS7.1
 Este programa es distribuído libremente bajo la licencia GPL v3

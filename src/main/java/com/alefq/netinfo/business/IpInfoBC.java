@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
 
 import com.alefq.netinfo.domain.IpInfo;
-import com.alefq.netinfo.poho.Atributo;
+import com.alefq.netinfo.pojo.Atributo;
 import com.alefq.netinfo.util.HttpUtil;
 import com.alefq.netinfo.util.WebUtils;
 import com.maxmind.geoip.Location;

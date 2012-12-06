@@ -1,4 +1,4 @@
-package com.alefq.netinfo.poho;
+package com.alefq.netinfo.pojo;
 
 public class Atributo {
 

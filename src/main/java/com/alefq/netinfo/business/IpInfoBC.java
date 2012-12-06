@@ -44,14 +44,21 @@ public class IpInfoBC implements Serializable {
 		StringBuffer url = new StringBuffer(
 				"http://api.hostip.info/get_json.php?position=true&ip=");
 		ret.setIp(ip);
-		url.append(ret.getIp());
+		if ("127.0.0.1".equals(ip)) {
+			logger.info("Es un request forwarded");
+			ret.setIpForwardedFor(webUtils.getRemoteAddressXForwardedFor());
+			url.append(ret.getIpForwardedFor());
+		} else {
+			url.append(ret.getIp());
+		}
 		// String ipInfoStr = httpUtil.getResponse(url.toString());
 		try {
 
 			LookupService cl = new LookupService(
 					"/usr/local/share/GeoIP/GeoLiteCity.dat",
 					LookupService.GEOIP_MEMORY_CACHE);
-			Location l2 = cl.getLocation(ret.getIp());
+			Location l2 = cl.getLocation(ret.getIpForwardedFor() == null ? ret
+					.getIp() : ret.getIpForwardedFor());
 			if (l2 != null) {
 				logger.debug("countryCode: "
 						+ l2.countryCode

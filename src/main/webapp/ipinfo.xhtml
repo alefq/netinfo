@@ -13,16 +13,32 @@
 <h:body>
 	<p:outputPanel>
 		<h:panelGrid id="grid1">
-			<h:panelGroup id="group1">
-				<h:outputLabel value="Ciudad " for="city"
-					styleClass="ui-widget input" />
-				<h:outputText id="city" value="#{ipInfoMB.ipInfo.city}"
-					styleClass="ui-widget input" />
-			</h:panelGroup>
 			<h:panelGroup>
-				<h:outputLabel value="País " for="pais" styleClass="ui-widget input" />
-				<h:outputText id="pais" value="#{ipInfoMB.ipInfo.country}"
-					styleClass="ui-widget input" />
+				<p:outputPanel rendered="#{ipInfoMB.ipInfo.ipForwardedFor eq null}">
+					<h:outputLabel value="Tu Nro. de IP es: " for="nroIp" styleClass="ui-widget input"/>
+					<h:outputText id="nroIp" value="#{ipInfoMB.ipInfo.ip}" styleClass="ui-widget input"/>
+				</p:outputPanel>
+				<p:outputPanel id="ipForwardedPanel"
+					rendered="#{ipInfoMB.ipInfo.ipForwardedFor ne null}">
+					<h:outputLabel value="Tu Nro. de IP de origen es "
+						for="ipForwarded" styleClass="ui-widget input"/>
+					<h:outputText id="ipForwarded" value="#{ipInfoMB.ipInfo.ipForwardedFor}" styleClass="ui-widget input"/>
+					<p:tooltip for="ipForwardedPanel">Es probable que estés usando un Proxy</p:tooltip>
+				</p:outputPanel>
+			</h:panelGroup>
+			<h:panelGroup id="group1">
+				<h:panelGrid columns="2">
+					<h:outputLabel value="Ciudad: " for="city"
+						styleClass="ui-widget input" />
+					<h:outputText id="city" value="#{ipInfoMB.ipInfo.city}"
+						styleClass="ui-widget input" />
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<h:outputLabel value="País: " for="pais"
+						styleClass="ui-widget input" />
+					<h:outputText id="pais" value="#{ipInfoMB.ipInfo.country}"
+						styleClass="ui-widget input" />
+				</h:panelGrid>
 			</h:panelGroup>
 			<h:panelGroup>
 				<p:accordionPanel activeIndex="-1">

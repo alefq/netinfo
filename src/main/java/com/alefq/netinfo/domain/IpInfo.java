@@ -7,6 +7,7 @@ public class IpInfo {
 	private String ip;
 	private Float latitude;
 	private Float longitud;
+	private String ipForwardedFor;
 
 	public IpInfo() {
 		// TODO Auto-generated constructor stub
@@ -18,7 +19,7 @@ public class IpInfo {
 
 	public String getCountry() {
 		if (country == null || "null".equals(country))
-			return "";
+			return "no disponible";
 		return country;
 	}
 
@@ -28,7 +29,7 @@ public class IpInfo {
 
 	public String getCity() {
 		if (city == null || "null".equals(city))
-			return "";
+			return "no disponible";
 		return city;
 	}
 
@@ -58,5 +59,13 @@ public class IpInfo {
 
 	public void setLongitud(Float longitud) {
 		this.longitud = longitud;
+	}
+
+	public String getIpForwardedFor() {
+		return ipForwardedFor;
+	}
+
+	public void setIpForwardedFor(String ipForwardedFor) {
+		this.ipForwardedFor = ipForwardedFor;
 	}
 }

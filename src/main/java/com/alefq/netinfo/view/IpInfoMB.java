@@ -35,8 +35,9 @@ public class IpInfoMB implements Serializable {
 	}
 
 	public IpInfo getIpInfo() {
-		String ip =  webUtils.getRemoteAddress(); //"201.217.28.36";//
-		return ipInfoBc.getIpInfo(ip);
+		String ip = webUtils.getRemoteAddress(); // "201.217.28.36";//
+		IpInfo info = ipInfoBc.getIpInfo(ip);
+		return info;
 	}
 
 	public List<Atributo> getListaAtributos() {
@@ -46,7 +47,7 @@ public class IpInfoMB implements Serializable {
 	public List<Atributo> getListaParametros() {
 		return ipInfoBc.getListaParametros();
 	}
-	
+
 	public List<Atributo> getListaRequestAtributos() {
 		return ipInfoBc.getListaRequestAtributos();
 	}

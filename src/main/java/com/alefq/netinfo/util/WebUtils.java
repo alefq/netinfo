@@ -9,10 +9,15 @@ import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.slf4j.Logger;
 
+import com.alefq.netinfo.constant.IpInfoConfig;
+
 public class WebUtils {
 
 	@Inject
-	Logger log;
+	private Logger log;
+	
+	@Inject
+	private IpInfoConfig infoConfig;
 
 	public static WebUtils instance() {
 		WeldContainer weld = new Weld().initialize();
@@ -64,6 +69,15 @@ public class WebUtils {
 			}
 		}
 
+		return ret;
+	}
+
+	public String getRemoteAddressXForwardedFor() {
+		String ret = null;
+		if(getRequest() != null)
+		{
+			ret = getRequest().getHeader(infoConfig.getxForwardedFor());
+		}
 		return ret;
 	}
 

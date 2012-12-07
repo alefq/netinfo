@@ -11,6 +11,7 @@ import br.gov.frameworkdemoiselle.stereotype.ViewController;
 import com.alefq.netinfo.business.IpInfoBC;
 import com.alefq.netinfo.domain.IpInfo;
 import com.alefq.netinfo.pojo.Atributo;
+import com.alefq.netinfo.util.IpUtils;
 import com.alefq.netinfo.util.WebUtils;
 
 @ViewController

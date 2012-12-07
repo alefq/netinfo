@@ -1,26 +1,47 @@
-<html xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets">
+<html xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-<f:view contentType="text/html" locale="#currentLocale" />
+<f:view contentType="text/html" />
 
 <h:head>
+	<ui:insert name="head" />
 	<title>#{messages['main.app.title']}</title>
+	<meta name="description"
+		content="IP address lookup, location, what is my ipaddress, proxy detection, Find, get, and show my IP address." />
+	<meta name="keywords"
+		content="my ip ,ip, address, my, what, is, find, get, show, locate, change, location, how, do, i, ip address, proxy, server, anonymous, hide, conceal, stealth, surf, web, anonymizer, anonymize, changer, privacy, geolocation, geolocate, lookup, look up, locate, trace, track, source, headers" />
 	<link type="text/css" rel="stylesheet" href="css/styles.css" />
 </h:head>
 
 <h:body style="background-color:#f1f1f1">
 	<table style="width: 100%">
 		<tr>
-			<td height="70" align="left"><a href="index.jsf"><img src="images/logo.png" border="0" /></a></td>
-		</tr>
-		<tr>
-			<td height="20"><ui:include src="/menu.xhtml" /></td>
+			<td>
+				<table>
+					<tr>
+						<td height="50" align="left" width="20%"><a href="/netinfo/"><img
+								src="https://jaguar.alefq.com/mediawiki/skins/common/images/alefq.png"
+								border="0" alt="Logo Alefq" height="50" /></a></td>
+						<td height="20" width="80%"><ui:include src="/menu.xhtml" /></td>
+					</tr>
+				</table>
+			</td>
 		</tr>
 		<tr valign="top">
 			<td height="400"><ui:insert name="body" /></td>
 		</tr>
 		<tr align="center">
-			<td height="20" align="center" class="text-input">#{messages['main.footer.text']}</td>
+			<td>
+				<table>
+					<tr>
+						<td height="20" align="center" class="text-input">#{messages['main.footer.text']}</td>
+						<td height="20" align="center" class="text-input"><a
+							href="#{messages['main.footer.link']}">Netinfo</a></td>
+					</tr>
+				</table>
+			</td>
 		</tr>
 	</table>
 

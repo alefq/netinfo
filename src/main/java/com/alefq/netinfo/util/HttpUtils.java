@@ -11,7 +11,7 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.slf4j.Logger;
 
-public class HttpUtil {
+public class HttpUtils {
 
 	@Inject
 	Logger logger;

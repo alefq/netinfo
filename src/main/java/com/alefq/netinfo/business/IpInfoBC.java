@@ -9,19 +9,16 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.primefaces.json.JSONException;
-import org.primefaces.json.JSONObject;
 import org.slf4j.Logger;
 
 import br.gov.frameworkdemoiselle.stereotype.BusinessController;
 
 import com.alefq.netinfo.domain.IpInfo;
 import com.alefq.netinfo.pojo.Atributo;
-import com.alefq.netinfo.util.HttpUtil;
+import com.alefq.netinfo.util.IpUtils;
 import com.alefq.netinfo.util.WebUtils;
 import com.maxmind.geoip.Location;
 import com.maxmind.geoip.LookupService;
-
 import com.maxmind.geoip.regionName;
 import com.maxmind.geoip.timeZone;
 
@@ -33,11 +30,11 @@ public class IpInfoBC implements Serializable {
 	 */
 	private static final long serialVersionUID = 6102813458661843778L;
 	@Inject
-	private HttpUtil httpUtil;
+	private IpUtils ipUtils;
 	@Inject
 	private Logger logger;
 	@Inject
-	WebUtils webUtils;
+	private WebUtils webUtils;
 
 	public IpInfo getIpInfo(String ip) {
 		IpInfo ret = new IpInfo();
@@ -46,8 +43,8 @@ public class IpInfoBC implements Serializable {
 		ret.setIp(ip);
 		if ("127.0.0.1".equals(ip)) {
 			logger.info("Es un request forwarded");
-			ret.setIpForwardedFor(webUtils.getRemoteAddressXForwardedFor());
-			url.append(ret.getIpForwardedFor());
+			setListIpForwardedFor(ret);
+			url.append(getIpOrigen(ret));
 		} else {
 			url.append(ret.getIp());
 		}
@@ -57,8 +54,7 @@ public class IpInfoBC implements Serializable {
 			LookupService cl = new LookupService(
 					"/usr/local/share/GeoIP/GeoLiteCity.dat",
 					LookupService.GEOIP_MEMORY_CACHE);
-			Location l2 = cl.getLocation(ret.getIpForwardedFor() == null ? ret
-					.getIp() : ret.getIpForwardedFor());
+			Location l2 = cl.getLocation(getIpOrigen(ret));
 			if (l2 != null) {
 				logger.debug("countryCode: "
 						+ l2.countryCode
@@ -106,6 +102,40 @@ public class IpInfoBC implements Serializable {
 		} catch (IOException e) {
 			logger.error("", e);
 		}
+		return ret;
+	}
+
+	private void setListIpForwardedFor(IpInfo info) {
+		String remoteAddressXForwardedFor = webUtils
+				.getRemoteAddressXForwardedFor();
+		List<String> lista = new ArrayList<String>();
+		if (remoteAddressXForwardedFor != null) {
+			String[] ips = remoteAddressXForwardedFor.split(",");
+			for (String ip : ips) {
+				if (ipUtils.isPrivateNework(ip)) {
+					info.setForwardingPrivateNetwork(true);
+				} else {
+					lista.add(ip);
+				}
+			}
+		}
+		info.setIpForwardedFor(lista);
+	}
+
+	public String getIpOrigen(IpInfo info) {
+		String ret = null;
+		if (info.getIpForwardedFor() != null
+				&& !info.getIpForwardedFor().isEmpty()) {
+			/*
+			 * Si hay más de un proxy intermedio, el x-forwarded-for tendrá
+			 * varios nros. de ip
+			 */
+			if (info.getIpForwardedFor().size() > 0)
+				ret = info.getIpForwardedFor().get(0);
+		} else {
+			ret = info.getIp();
+		}
+		info.setPrivateNetwork(ipUtils.isPrivateNework(ret));
 		return ret;
 	}
 

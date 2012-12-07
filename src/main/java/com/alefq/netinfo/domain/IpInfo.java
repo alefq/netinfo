@@ -1,5 +1,7 @@
 package com.alefq.netinfo.domain;
 
+import java.util.List;
+
 public class IpInfo {
 
 	private String country;
@@ -7,7 +9,9 @@ public class IpInfo {
 	private String ip;
 	private Float latitude;
 	private Float longitud;
-	private String ipForwardedFor;
+	private List<String> ipForwardedFor;
+	private Boolean forwardingPrivateNetwork;
+	private Boolean privateNetwork;
 
 	public IpInfo() {
 		// TODO Auto-generated constructor stub
@@ -61,11 +65,30 @@ public class IpInfo {
 		this.longitud = longitud;
 	}
 
-	public String getIpForwardedFor() {
+	public List<String> getIpForwardedFor() {
 		return ipForwardedFor;
 	}
 
-	public void setIpForwardedFor(String ipForwardedFor) {
+	public void setIpForwardedFor(List<String> ipForwardedFor) {
 		this.ipForwardedFor = ipForwardedFor;
 	}
+
+	public Boolean getForwardingPrivateNetwork() {
+		if(forwardingPrivateNetwork == null)
+			forwardingPrivateNetwork = Boolean.FALSE;
+		return forwardingPrivateNetwork;
+	}
+
+	public void setForwardingPrivateNetwork(Boolean forwardingPrivateNetwork) {
+		this.forwardingPrivateNetwork = forwardingPrivateNetwork;
+	}
+
+	public Boolean getPrivateNetwork() {
+		return privateNetwork;
+	}
+
+	public void setPrivateNetwork(Boolean privateNetwork) {
+		this.privateNetwork = privateNetwork;
+	}
+
 }

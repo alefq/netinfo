@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,6 +24,7 @@ import com.maxmind.geoip.regionName;
 import com.maxmind.geoip.timeZone;
 
 @BusinessController
+@SessionScoped
 public class IpInfoBC implements Serializable {
 
 	/**
@@ -36,13 +38,27 @@ public class IpInfoBC implements Serializable {
 	@Inject
 	private WebUtils webUtils;
 
-	public IpInfo getIpInfo(String ip) {
+	private IpInfo ipInfo;
+
+	public IpInfo getIpInfo(String ipFromRequest) {
+		ipInfo = initIpInfo(ipFromRequest);
+		return ipInfo;
+	}
+
+	public IpInfo getIpInfo() {
+		if (ipInfo == null) {
+			initIpInfo(webUtils.getRemoteAddress());
+		}
+		return ipInfo;
+	}
+
+	private IpInfo initIpInfo(String ip) {
 		IpInfo ret = new IpInfo();
 		StringBuffer url = new StringBuffer(
 				"http://api.hostip.info/get_json.php?position=true&ip=");
 		ret.setIp(ip);
 		if ("127.0.0.1".equals(ip)) {
-			logger.info("Es un request forwarded");
+			logger.trace("Es un request forwarded");
 			setListIpForwardedFor(ret);
 			url.append(getIpOrigen(ret));
 		} else {
@@ -168,7 +184,7 @@ public class IpInfoBC implements Serializable {
 	public List<Atributo> getListaRequestAtributos() {
 		List<Atributo> ret = new ArrayList<Atributo>();
 		HttpServletRequest request = webUtils.getRequest();
-		ret.add(new Atributo("nroIp.request", request.getRemoteAddr()));
+		ret.add(new Atributo("nroIp.request", getIpOrigen(getIpInfo())));
 		ret.add(new Atributo("characterEncoding", request
 				.getCharacterEncoding()));
 		ret.add(new Atributo("contentLength", String.valueOf(request

@@ -1,5 +1,7 @@
 package com.alefq.netinfo.util;
 
+import java.io.Serializable;
+
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -11,11 +13,16 @@ import org.slf4j.Logger;
 
 import com.alefq.netinfo.constant.IpInfoConfig;
 
-public class WebUtils {
+public class WebUtils implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 741084349502204922L;
 
 	@Inject
 	private Logger log;
-	
+
 	@Inject
 	private IpInfoConfig infoConfig;
 
@@ -74,8 +81,7 @@ public class WebUtils {
 
 	public String getRemoteAddressXForwardedFor() {
 		String ret = null;
-		if(getRequest() != null)
-		{
+		if (getRequest() != null) {
 			ret = getRequest().getHeader(infoConfig.getxForwardedFor());
 		}
 		return ret;

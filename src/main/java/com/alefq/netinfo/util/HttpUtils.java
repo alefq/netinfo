@@ -1,6 +1,7 @@
 package com.alefq.netinfo.util;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.inject.Inject;
 
@@ -11,8 +12,12 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.slf4j.Logger;
 
-public class HttpUtils {
+public class HttpUtils implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5327814861382759142L;
 	@Inject
 	Logger logger;
 

@@ -41,7 +41,8 @@ public class IpInfoBC implements Serializable {
 	private IpInfo ipInfo;
 
 	public IpInfo getIpInfo(String ipFromRequest) {
-		ipInfo = initIpInfo(ipFromRequest);
+		if(ipInfo == null) 
+			ipInfo = initIpInfo(ipFromRequest);
 		return ipInfo;
 	}
 
